@@ -83,8 +83,8 @@
 \usefonttheme[onlymath]{serif}
 %\setbeamertemplate{headline}[default]
 %\setbeamertemplate{navigation symbols}{}
-\mode<beamer>{\setbeamertemplate{blocks}[rounded][shadow=true]}
-\setbeamercolor{block body example}{fg=blue, bg=black!20}
+%\mode<beamer>{\setbeamertemplate{blocks}[rounded][shadow=true]}
+%\setbeamercolor{block body example}{fg=blue, bg=black!20}
 }
 
 \usepackage{graphicx} % Allows including images
@@ -302,9 +302,9 @@ Universidade Federal de Minas Gerais \\ % Your institution for the title page
 \end{frame}
 
 %------------------------------------------------
-\subsection{O que são Pthreads?} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+\subsection{Como vamos usar Threads?} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
 
-\begin{frame} \frametitle{Como vamos usar Threads?}
+\begin{frame} \frametitle{O que é PThreads?}
 	\begin{block}{Através da biblioteca Pthreads -- Visão Geral}
 		\begin{itemize}[<+->]
 			\item Historicamente grandes empresas de HW tinham suas próprias implementações de threads
@@ -556,22 +556,24 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 	
 \end{frame}
 %------------------------------------------------
+\subsection{Sockets e Threads}
+%------------------------------------------------
 \begin{frame}
 	\begin{columns}
-		\column{0.4\textwidth}
+		\column{0.3\textwidth}
 			\begin{figure}
 				\includegraphics[width=.8\linewidth]{img/taserto.png}
-				\caption{Vlw Brunão ta Serto, maIs i daew? R: RLX!}
+				\caption{Vlw Brunão ta Serto, maIs i daew? \\R: RLX!}
 			\end{figure}
 		
 
-		\column{0.6\textwidth}
+		\column{0.7\textwidth}
 		\begin{block}{Como uso thread com sockets?}
 			\begin{itemize}
 				\item Relembrando, nosso OBJETIVO ERA:
 					\begin{itemize}
-						\item Manipular conexões simultaneas (~)
-						\item Saber Threads (\checkmark)
+						\item Saber \textcolor{red}{THREADS} (\checkmark)
+						\item Conexões simultaneas com Threads (~)
 					\end{itemize}
 			\end{itemize}
 		\end{block}
@@ -594,10 +596,9 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 		\column{0.5\textwidth}
 			\begin{tikzpicture}
 			 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=1.05\linewidth]{img/server-thread-includes.png}};
-				
-				% \draw[thick,->] (0,0) -- (4.5, 5);
-
+			 	\draw<2->[red,ultra thick,rounded corners] (0,.85) rectangle (5.8,2);
 			\end{tikzpicture}
+
 		
 	\end{columns}
 \end{frame}
@@ -621,7 +622,11 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 	\begin{tikzpicture}
 	 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=.8\linewidth]{img/server-thread-while.png}};
 		
-		% \draw[thick,->] (0,0) -- (4.5, 5);
+		\draw<2->[red,ultra thick,rounded corners] (.8,4.3) rectangle (7,5.2);
+
+		\draw<3->[red,ultra thick,rounded corners] (.8,3) rectangle (7,3.8);
+
+		\draw<4->[red,ultra thick,rounded corners] (.8, 1.9) rectangle (7,2.9);
 
 	\end{tikzpicture}
 		
@@ -677,6 +682,7 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 
 %------------------------------------------------
 \section{Usando SELECT}
+%------------------------------------------------
 \begin{frame} \frametitle{Parte II -- Função select()}
 	\begin{block}{Objetivos}
 		\begin{itemize}
@@ -698,6 +704,9 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 	\end{block}
 \end{frame}
 
+%------------------------------------------------
+
+\subsection{Visão Geral}
 %------------------------------------------------
 \begin{frame}
 	\begin{block}{select() -- Visão geral}
@@ -755,6 +764,8 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 \end{frame}
 
 %------------------------------------------------
+\subsection{Estrutura, select() e MACROS}
+%------------------------------------------------
 \begin{frame}
 	\begin{block}{fd\_set}
 	
@@ -798,15 +809,50 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 
 \begin{frame}
 
-int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_set *read-fds}, \textcolor{orange}{fd\_set *write-fds}, \textcolor[rgb]{.01,.3,.0}{fd\_set *except-fds}, \textcolor[rgb]{.74,.01,.61}{struct timeval *timeout} );
+int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_set *read-fds}, \textcolor{orange}{fd\_set *write-fds}, \textcolor[rgb]{.75,.48,0}{fd\_set *except-fds}, \textcolor[rgb]{.74,.01,.61}{struct timeval *timeout} );
 	\begin{block}{Função select()}
 	
 		\begin{itemize}[<+->]
 			\item \textcolor{purple}{int nfds}: tamanho da estrutura (limite superior)
 			\item \textcolor{blue}{fd\_set *read-fds}: se você quer saber se algum socket está pronto para receber
 			\item \textcolor{orange}{fd\_set *write-fds}: se você quer saber se algum socket está pronto para enviar
-			\item \textcolor[rgb]{.01,.3,.0}{fd\_set *except-fds}: se você quer saber se alguma exceção ocorreu em algum socket
+			\item \textcolor[rgb]{.75,.48,0}{fd\_set *except-fds}: se você quer saber se alguma exceção ocorreu em algum socket
 			\item \textcolor[rgb]{.74,.01,.61}{struct timeval *timeout}: por quanto tempo verificar esses conjuntos para você
+		\end{itemize}
+
+	\end{block}
+
+	\begin{alertblock}{Info.}<6->
+	\footnotesize
+		\textcolor{red}{\textbf{select()}} nos dá o ``poder" para monitorar vários sockets ao mesmo tempo. Ela informará qual socket está pronto para ler/escrever ou qual lançou exceções.
+
+	\end{alertblock}
+	
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+
+int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_set *read-fds}, \textcolor{orange}{fd\_set *write-fds}, \textcolor[rgb]{.75,.48,0}{fd\_set *except-fds}, \textcolor[rgb]{.74,.01,.61}{struct timeval *timeout} );
+	\begin{block}{Função select()}
+	
+		\begin{itemize}[<+->]
+			\item A função recebe uma lista de sockets para monitorar \\
+			\textcolor[rgb]{.68,.63,.03}{int atividade;\\
+			atividade = }\textcolor{red}{select}(\textcolor{purple}{max\_fd + 1}, \textcolor[rgb]{.01,.3,.0}{\&readfds}, NULL, NULL, NULL );\\
+
+			\item Quando um socket estiver pronto para ser lido, \textcolor{red}{select} vai retornar e \textcolor[rgb]{.01,.3,.0}{readfds} terá esses sockets que estão pronto para serem lidos
+		\end{itemize}
+
+	\end{block}
+
+	\begin{block}{Retorno da função select()}<3->
+	
+		\begin{itemize}
+			\item \# de Descritores em caso de sucesso
+			\item 0 se o timeout foi alcançado
+			\item -1 em caso de erro
 		\end{itemize}
 
 	\end{block}
@@ -814,42 +860,42 @@ int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_s
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}
-	\begin{block}{Scokets - Nomenclatura}
-		\begin{itemize}
-			\item<1-> Existe uma nomenclatura para cada um dos "lados" da comunicação
-			\item<2-> Servidor
-				\begin{itemize}
-					\item Espera por conexões de entrada
-					\item Fornece certos tipos de serviços para a outra parte
-				\end{itemize}
-			\item<3-> Cliente
-				\begin{itemize}
-					\item Solicita uma conexão ao servidor
-					\item Faz requisições de serviços
-				\end{itemize}
-			
-			\item<4-> Não é o computador quem decide quem é cliente ou quem é servidor, mas sim a forma como o programa usa os sockets.
-		\end{itemize}
+
+\begin{frame} 
+
+	\begin{block}{Sequência frequentemente usada}
+	
+		\begin{enumerate}[<+->]
+			\item Preencha uma estrutura \textcolor{blue}{fd\_set} com o(s) socket(s) que, quando receber(em) dados, você quer ser informado
+			\item Preencha uma estrutura \textcolor{blue}{fd\_set} com o(s) socket(s) que, quando você puder escrever nele(s), você quer ser informado
+			\item Chame \textcolor{red}{select()} e bloqueie até que algo ocorra
+			\item Quando o \textcolor{red}{select()} retornar, confira se algum socket está pronto. Em caso afirmativo, sirva o socket da maneira necessária
+		\end{enumerate}
+
 	\end{block}
+	
 \end{frame}
+
 %------------------------------------------------
+\subsection{Sockets e SELECT}
+%------------------------------------------------
+
 \begin{frame}
 	\begin{columns}
-		\column{0.4\textwidth}
+		\column{0.3\textwidth}
 			\begin{figure}
 				\includegraphics[width=.8\linewidth]{img/taserto.png}
-				\caption{Vlw Brunão ta Serto, maIs i daew? R: RLX!}
+				\caption{Vlw Brunão ta Serto, maIs i daew? \\ R: RLX!}
 			\end{figure}
 		
 
-		\column{0.6\textwidth}
-		\begin{block}{Como uso thread com sockets?}
+		\column{0.7\textwidth}
+		\begin{block}{Como uso select com sockets?}
 			\begin{itemize}
-				\item Relembrando, nosso OJBETIVO ERA:
+				\item Relembrando, nosso OBJETIVO ERA:
 					\begin{itemize}
-						\item Receber várias conexões simultaneas (~)
-						\item Saber Threads (\checkmark)
+						\item Saber usar \textcolor{red}{SELECT} (\checkmark)
+						\item Conexões simultaneas SELECT (~)
 					\end{itemize}
 			\end{itemize}
 		\end{block}
@@ -857,118 +903,40 @@ int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_s
 	\end{columns}
 \end{frame}
 
-
 %------------------------------------------------
 
 \begin{frame}
-	\begin{figure}
-		\includegraphics[width=.55\linewidth]{img/tcplab}
-	\end{figure}	
+	\centering
+ 	\Huge
+	Exibir e executar códigos
 \end{frame}
 
+
+%------------------------------------------------
+\section{Extra} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
 %------------------------------------------------
 
-\begin{frame}
+\begin{frame}\frametitle{Extras}
+	\begin{exampleblock}{MONITORIA}
+		Seg e Qua 16hrs às 18 hrs
+	\end{exampleblock}
 	
-	
-	\begin{overlayarea}{\textwidth}{10em}
-		
-		\only<1> {
-		\begin{block}{Scokets - Tipos}
-			\begin{itemize}
-				\item Stream Sockets - SOCK\_STREAM
-				\begin{itemize}
-					\item Usa o protocolo TCP/IP \footnote{The Transmission Control Protocol RFC 2001\cite{stevens1997tcp}. Internet Protocol address.}
-					\item Mantém uma conexão confiável
-					\item Os dados vão em ordem
-					\item Livre de erros
-				\end{itemize}
-			\end{itemize}
-		\end{block}
-		}
-
-		\only<2->{
-		\begin{block}{Scokets - Tipos}
-			\begin{itemize}
-				 \item Datagram Sockets - SOCK\_DGRAM
-				 \begin{itemize}
-				 	\item Usa o protocolo UDP/IP \footnote{User Datagram Protocol RFC 768\cite{postel1980user}.}
-					\item \textbf{Não} mantém uma conexão confiável
-					\item \textbf{Não} garante a chegada em ordem dos dados
-				\end{itemize}
-			\end{itemize}
-		\end{block}
-		}
-	
-		\only<3>{
-			\begin{figure}
-			\includegraphics[width=1\linewidth]{img/dataencap}
-			\end{figure}
-		}
-	\end{overlayarea}
-		
-\end{frame}
-%------------------------------------------------
-\begin{frame}
-\begin{columns}
-	\begin{column}{4cm}
-		\begin{block}{Scokets - Porta}
-			\begin{itemize}
-				\item<1-> Como saber qual aplicação devo enviar os dados?
-				\item<2-> Cada aplicação vai ter uma porta associada
-				\begin{itemize}
-					\item Comando: less /etc/services
-					\item netstat -antp
-				\end{itemize}
-			\end{itemize}
-		\end{block}
-	\end{column}
-	
-	\begin{column}{7cm}
-		\begin{figure}
-			\includegraphics<1>[width=1\linewidth]{img/net_soc2}
-		\end{figure}	
-		
-		\begin{figure}
-		\includegraphics<2>[width=1\linewidth]{img/sockets01}
-		\end{figure}
-	\end{column}
-\end{columns}
-
-\end{frame}
-%------------------------------------------------
-
-\begin{frame}
-	\begin{figure}
-		\includegraphics<1>[width=1\linewidth]{img/port}
-	\end{figure}
-\end{frame}
-
-%------------------------------------------------
-\section{Programação} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
-%------------------------------------------------
-\subsection{Cliente e Servidor} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
-%------------------------------------------------
-
-\begin{frame}\frametitle{Cliente e Servidor}
-	\begin{example}{Servidor.c}
+	\begin{alertblock}{E-mail: \textbf{bruno.ps@dcc.ufmg.br}}
+		Enviar e-mail antecipadamente com o dia/horário para o encontro com:
 		\begin{itemize}
-			\item<1-> Veja o código Servidor.c \cite{bruno}
-			\item<2-> Comando: nc $<$endereço$>$ $<$porta$>$
-			\begin{itemize}
-				\item Comando: nc localhost 5050
-			\end{itemize}
-		\end{itemize}
-	\end{example}
-	
-	\begin{example}<3->{Cliente.c}
-		\begin{itemize}
-			\item<3-> Veja o código Cliente.c \cite{bruno}
-			\item<4-> Execute uma instância do servidor e uma do cliente
-		\end{itemize}
-	\end{example}
+		 	\item Assunto: [MONITORIA] [ASSUNTO] [DIA/HORÁRIO]
+		 		\begin{itemize}
+		 			\item ASSUNTO: TP, prova, lista de exercício ...
+		 		\end{itemize}
+		 	\item Corpo: Ideia geral do problema.
+		\end{itemize} 
+	\end{alertblock}
+
+	\begin{block}{\includegraphics[width=0.035 \linewidth]{img/git.png}~~Git é vida! -- Download Slides e Códigos}
+		git clone https://github.com/BrunoPereiraSantos/aula-threads.git
+	\end{block}
+
 \end{frame}
-%------------------------------------------------
 
 %------------------------------------------------
 
@@ -977,25 +945,6 @@ int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_s
 	\nocite{*}
 	\bibliographystyle{plain}
 	\bibliography{refs}
-\end{frame}
-%------------------------------------------------
-\section{Extra} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
-%------------------------------------------------
-
-\begin{frame}\frametitle{Extras}
-	\begin{example}{ShowIP.c}
-		\begin{itemize}
-			\item<1-> Veja o código ShowIP.c \cite{bruno}
-			\item<2-> Comando: ping $<$endereço$>$
-		\end{itemize}
-	\end{example}
-	
-	\begin{example}<3->{client\_beej.c e server\_beej.c}
-		\begin{itemize}
-			\item<3-> Versão com mais detalhes
-			\item<3-> Execute uma instância do servidor e uma do cliente
-		\end{itemize}
-	\end{example}
 \end{frame}
 
 %%------------------------------------------------

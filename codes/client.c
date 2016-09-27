@@ -6,6 +6,7 @@
 // Description : C ECHO client example using sockets, Ansi-style
 //============================================================================
 
+#include <unistd.h> // for close
 #include<stdio.h> //printf
 #include<string.h>    //strlen
 #include<sys/socket.h>    //socket
