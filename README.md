@@ -14,12 +14,7 @@ Sockets Múltiplas Conexões: usando Threads e Select
 # Autor
 ### Bruno P. Santos
 
-
-### Version History:
-0.1
-
 ### Reporting Bugs and comments:
-
 
 ```sh
 contato: bruno.ps@dcc.ufmg.br
