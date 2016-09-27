@@ -1,6 +1,6 @@
 Sockets Múltiplas Conexões: usando Threads e Select
 =====================================
-### Descrição
+## Descrição
 
 > Aula sobre Threads e SELECT para manipulação de múltimas conexões.
 > Esta aula foi ministrada na disciplina de Redes de Computadoes (DCC023) no Departamento de Ciêncida da Computação da Universidade Federal de Minas Gerais.
@@ -11,10 +11,10 @@ Sockets Múltiplas Conexões: usando Threads e Select
 
 ##### http://homepages.dcc.ufmg.br/~bruno.ps/
 
-# Autor
+## Autor
 ### Bruno P. Santos
 
-### Bugs e comentários:
+## Bugs e comentários:
 
 ```sh
 contato: bruno.ps@dcc.ufmg.br
