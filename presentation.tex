@@ -97,6 +97,7 @@
 \usepackage{ragged2e} %allows justify text
 \usepackage{url}
 \usepackage{amssymb}
+\usepackage{tikz}
 
 \usepackage{lipsum}
 \newcommand\Fontvi{\fontsize{8}{7.2}\selectfont}
@@ -160,6 +161,7 @@ Universidade Federal de Minas Gerais \\ % Your institution for the title page
 						\item \textcolor{red}{\textbf{Threads}}
 						\item \textcolor{red}{\textbf{Select}}
 						\item Processos
+						\item libevent
 					\end{itemize}
 				\end{itemize}
 			\end{block}
@@ -188,6 +190,7 @@ Universidade Federal de Minas Gerais \\ % Your institution for the title page
 			\begin{itemize}
 				\item Usando \textcolor<2->{red}{\textit{Threads}}
 				\item Usando \textit{Select}
+				\item \textcolor{gray}{Usanto libevent}
 			\end{itemize}
 		\end{itemize}
 		\begin{itemize}
@@ -484,29 +487,42 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 \subsection{1º Código com Threads}
 %------------------------------------------------
 \begin{frame}
-	\begin{columns}
-		\column{0.8\textwidth}
-			\begin{figure}
-				\includegraphics[width=.8\linewidth]{img/code-thread.png}
-			\end{figure}
+
+	\begin{figure}
+		\includegraphics[width=.7\linewidth]{img/code-thread.png}
+	\end{figure}
+	% \begin{columns}
+	% 	\column{0.8\textwidth}
+	% 		\begin{figure}
+	% 			\includegraphics[width=.8\linewidth]{img/code-thread.png}
+	% 		\end{figure}
 		
 
-		\column{0.2\textwidth}
-		\begin{flushright}
-			\begin{figure}
-				\includegraphics[width=1\linewidth]{img/torvalds.png}
-			\end{figure}
-		\end{flushright}	
+	% 	\column{0.2\textwidth}
+	% 	\begin{flushright}
+	% 		\begin{figure}
+	% 			\includegraphics[width=1\linewidth]{img/torvalds.png}
+	% 		\end{figure}
+	% 	\end{flushright}	
 		
-	\end{columns}
+	% \end{columns}
 \end{frame}
 
 
 %------------------------------------------------
 \begin{frame}
-	\begin{flushleft}
-	\includegraphics[width=1.1\linewidth]{img/compiling.png}
-	\end{flushleft}
+	% \begin{flushleft}
+	% \includegraphics[width=1.1\linewidth]{img/compiling.png}
+
+	% \end{flushleft}
+	\begin{tikzpicture}
+	 	\node[anchor=south west,inner sep=0] at (-5,0) {\includegraphics[width=1\linewidth]{img/compiling.png}};
+		
+		% \draw[thick,->] (0,0) -- (4.5, 5);
+
+	\end{tikzpicture}
+	
+
 \end{frame}
 
 %------------------------------------------------
@@ -545,16 +561,16 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 		\column{0.4\textwidth}
 			\begin{figure}
 				\includegraphics[width=.8\linewidth]{img/taserto.png}
-				\caption{Vlw Brunão ta Serto, maIs I daew? R: RLX!}
+				\caption{Vlw Brunão ta Serto, maIs i daew? R: RLX!}
 			\end{figure}
 		
 
 		\column{0.6\textwidth}
 		\begin{block}{Como uso thread com sockets?}
 			\begin{itemize}
-				\item Relembrando, nosso OJBETIVO ERA:
+				\item Relembrando, nosso OBJETIVO ERA:
 					\begin{itemize}
-						\item Receber várias conexões simultaneas (~)
+						\item Manipular conexões simultaneas (~)
 						\item Saber Threads (\checkmark)
 					\end{itemize}
 			\end{itemize}
@@ -564,8 +580,104 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 \end{frame}
 
 %------------------------------------------------
+\begin{frame}\frametitle{O que muda ao usar Threads?}
+	\begin{columns}
+		\column{0.5\textwidth}
+			\begin{tikzpicture}
+			 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=1.05\linewidth]{img/server-includes.png}};
+				
+				% \draw[thick,->] (0,0) -- (4.5, 5);
+
+			\end{tikzpicture}
+		
+
+		\column{0.5\textwidth}
+			\begin{tikzpicture}
+			 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=1.05\linewidth]{img/server-thread-includes.png}};
+				
+				% \draw[thick,->] (0,0) -- (4.5, 5);
+
+			\end{tikzpicture}
+		
+	\end{columns}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}\frametitle{O que muda ao usar Threads?}
+	
+	\textcolor{red}{Processo com 1 Thread (sem conexões simultaneas)}\\
+	\begin{tikzpicture}
+	 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=1\linewidth]{img/server-while.png}};
+		
+		% \draw[thick,->] (0,0) -- (4.5, 5);
+
+	\end{tikzpicture}
+		
+\end{frame}
+
+\begin{frame}\frametitle{O que muda ao usar Threads?}
+	
+	\textcolor{red}{Com PThread (permite-se conexões simultaneas)}\\
+	\begin{tikzpicture}
+	 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=.8\linewidth]{img/server-thread-while.png}};
+		
+		% \draw[thick,->] (0,0) -- (4.5, 5);
+
+	\end{tikzpicture}
+		
+\end{frame}
+
+
+%------------------------------------------------
+\begin{frame}\frametitle{O que muda ao usar Threads?}
+	\textcolor{red}{Com PThread (permite-se conexões simultaneas)}\\
+	\textcolor{red}{connection-handle}\\
+	\begin{tikzpicture}
+	 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=.8\linewidth]{img/handle-connection-server.png}};
+		
+		% \draw[thick,->] (0,0) -- (4.5, 5);
+
+	\end{tikzpicture}
+		
+\end{frame}
+
+
+%------------------------------------------------
+\begin{frame}\frametitle{O que muda ao usar Threads?}
+	\begin{columns}
+		\column{0.5\textwidth}
+			Sem PThread\\
+			\begin{tikzpicture}
+			 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=1.05\linewidth]{img/server-while.png}};
+				
+				% \draw[thick,->] (0,0) -- (4.5, 5);
+
+			\end{tikzpicture}
+		
+
+		\column{0.5\textwidth}
+			Com PThread\\
+			\begin{tikzpicture}
+			 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=1.05\linewidth]{img/server-thread-while.png}};
+				
+				% \draw[thick,->] (0,0) -- (4.5, 5);
+
+			\end{tikzpicture}
+		
+	\end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+	\centering
+ 	\Huge
+	Executar códigos
+\end{frame}
+
+%------------------------------------------------
 \section{Usando SELECT}
-\begin{frame} \frametitle{Segunda parte}
+\begin{frame} \frametitle{Parte II -- Função select()}
 	\begin{block}{Objetivos}
 		\begin{itemize}
 			\item Ao final dessa aula você será capaz de:
@@ -577,12 +689,128 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 			\begin{itemize}
 				\item Usando \textit{Threads}
 				\item Usando \textcolor<2->{red}{\textit{Select}}
+				\item \textcolor{gray}{Usanto libevent}
 			\end{itemize}
 		\end{itemize}
 		\begin{itemize}
-			\item<2-> Vamos criar um \textbf{SERVIDOR} que faz uso do SELECT para gerenciar múltiplas conexões
+			\item<2-> Vamos criar um \textbf{SERVIDOR} que faz uso da SELECT para gerenciar múltiplas conexões
 		\end{itemize}
 	\end{block}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+	\begin{block}{select() -- Visão geral}
+		\begin{itemize}
+			\item<1-> Ao invés de um thread para cada requisição, um único processo\footnote{Com uma única thread} serve a todas as requisições
+			\item<2-> select() funciona bloqueando o processo até que seja acordado por um evento no socket
+		\end{itemize}
+	\end{block}
+
+	\begin{figure}
+		\includegraphics[width=.5\linewidth]{img/process_states.png}<2->
+	\end{figure}
+	
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}\frametitle{select() -- Vantagens e Desvantagens}
+	\begin{block}{Vantagens}<1->
+		\begin{itemize}
+			\item O servidor precisa de apenas um único processo para lidar com todas as solicitações
+
+			\item O servidor não vai precisar de primitivas de memória compartilhada ou sincronização para que diferentes 'tarefas' se comuniquem
+		\end{itemize}
+	\end{block}
+
+	\begin{alertblock}{Desvantagens}<2->
+		\begin{itemize}
+			\item O servidor não pode agir como se houvesse apenas um cliente
+			\item Com select(), a programação não é tão transparente
+		\end{itemize}
+	\end{alertblock}
+	
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+	\begin{block}{Como o select() funciona?}
+		\begin{itemize}
+			\item<1-> Select() funciona bloqueando o processo até que \textcolor{red}{\textbf{algo}} aconteça em um descritor de arquivo (ou seja, em um socket)
+
+			\item<2-> O que é \textcolor{red}{\textbf{algo}}?
+			\begin{itemize}
+				\item \textcolor{purple}{\textbf{Você diz}} ao select() o que quer que esse \textcolor{red}{\textbf{algo}} que vai te acordar seja (Ex. entrada de dados)
+
+				\item<3-> Como assim ``\textcolor{purple}{\textbf{Você diz}}"?
+					\begin{itemize}
+						\item Você usa a estrutura \textcolor{blue}{\textbf{fd\_set}} e algumas macros para isso.
+					\end{itemize}
+
+			\end{itemize}
+
+		\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+	\begin{block}{fd\_set}
+	
+		\begin{itemize}[<+->]
+			\item \textcolor{blue}{\textbf{fd\_set}} é um conjunto de sockets para ``monitorar" alguma atividade
+
+			\item Há quadro macros úteis para manipular uma \textcolor{blue}{\textbf{fd\_set}}:
+			\begin{itemize}[<+->]
+				\item \textcolor{red}{FD\_SET}(\textcolor{purple}{int fd}, \textcolor{blue}{fd\_set *set}); adiciona um \textcolor{purple}{fd} ao \textcolor{blue}{set}
+
+				\item \textcolor{red}{FD\_CLR}(\textcolor{purple}{int fd}, \textcolor{blue}{fd\_set *set}); remove \textcolor{purple}{fd} se estiver no \textcolor{blue}{set}
+
+				\item \textcolor{red}{FD\_ISSET}(\textcolor{purple}{int fd}, \textcolor{blue}{fd\_set *set}); retorna true se \textcolor{purple}{fd} estiver no \textcolor{blue}{set}
+
+				\item \textcolor{red}{FD\_ZERO}(\textcolor{blue}{fd\_set *set}); remove todas as entradas do \textcolor{blue}{set}
+			\end{itemize}
+		\end{itemize}
+
+	\end{block}
+	
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+	\begin{block}{Usando o fd\_set}
+	
+		\begin{itemize}[<+->]
+			\item Cria-se uma estrutura para armazenar os sockets\\
+			\textcolor{blue}{\textbf{fd\_set}} \textcolor[rgb]{.01,.3,.0}{readfds};
+
+			\item Adiciona-se um socket descriptor (sd) á estrutura\\
+			 \textcolor{red}{FD\_SET}(sd, \textcolor[rgb]{.01,.3,.0}{readfds});
+		\end{itemize}
+
+	\end{block}
+	
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+
+int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_set *read-fds}, \textcolor{orange}{fd\_set *write-fds}, \textcolor[rgb]{.01,.3,.0}{fd\_set *except-fds}, \textcolor[rgb]{.74,.01,.61}{struct timeval *timeout} );
+	\begin{block}{Função select()}
+	
+		\begin{itemize}[<+->]
+			\item \textcolor{purple}{int nfds}: tamanho da estrutura (limite superior)
+			\item \textcolor{blue}{fd\_set *read-fds}: se você quer saber se algum socket está pronto para receber
+			\item \textcolor{orange}{fd\_set *write-fds}: se você quer saber se algum socket está pronto para enviar
+			\item \textcolor[rgb]{.01,.3,.0}{fd\_set *except-fds}: se você quer saber se alguma exceção ocorreu em algum socket
+			\item \textcolor[rgb]{.74,.01,.61}{struct timeval *timeout}: por quanto tempo verificar esses conjuntos para você
+		\end{itemize}
+
+	\end{block}
+	
 \end{frame}
 
 %------------------------------------------------
@@ -611,7 +839,7 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 		\column{0.4\textwidth}
 			\begin{figure}
 				\includegraphics[width=.8\linewidth]{img/taserto.png}
-				\caption{Vlw Brunão ta Serto, maIs I daew? R: RLX!}
+				\caption{Vlw Brunão ta Serto, maIs i daew? R: RLX!}
 			\end{figure}
 		
 
