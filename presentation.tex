@@ -71,7 +71,7 @@
 %\usecolortheme{whale}
 %\usecolortheme{wolverine}
 
-\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+\setbeamertemplate{foiling} % To remove the footer line in all slides uncomment this line
 %\setbeamertemplate{footline}[page number]{} % To replace the footer line in all slides with a simple slide count uncomment this line
 
 %\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
@@ -310,7 +310,7 @@ Universidade Federal de Minas Gerais \\ % Your institution for the title page
 			\item Historicamente grandes empresas de HW tinham suas próprias implementações de threads
 			\item Isto gerou:
 				\begin{itemize}
-					\item Dificuldades de desenvolvidmento e portabilidade
+					\item Dificuldades de desenvolvimento e portabilidade
 				\end{itemize}
 			\item Então foi necessário criar uma padronização
 				\begin{itemize}
@@ -335,7 +335,7 @@ Universidade Federal de Minas Gerais \\ % Your institution for the title page
 \begin{frame}
 	\begin{block}{Pthread API}
 		\begin{itemize}
-			\item<1-> As subrotinas da API Pthreads podem ser agrupadas em 4 grandes grupos:
+			\item<1-> As sub-rotinas da API Pthreads podem ser agrupadas em 4 grandes grupos:
 				\begin{enumerate}
 					\item<1-> \textcolor<5->{red}{\textbf{Gerenciamento de Threads:} rotinas para criar, desanexar, agrupar. Além de funções para consultar atributos das threads}	
 
@@ -359,14 +359,14 @@ int \textcolor{red}{pthread\_create}(\textcolor{purple}{pthread\_t * thread}, \t
 
 	\begin{block}{Criar uma thread}
 		\begin{itemize}[<+->]
-			\item \textcolor{purple}{pthread\_t * thread}: identificador único para uma nova thread (retornado pela subrotina)
+			\item \textcolor{purple}{pthread\_t * thread}: identificador único para uma nova thread (retornado pela sub-rotina)
 			\item \textcolor{blue}{pthread\_attr\_t *attr}: estrutura para definir valores dos atributos da thread
 				\begin{itemize}
 					\item Política de escalonamento
 					\item Tamanho da pilha...
 				\end{itemize}
 			\item \textcolor{orange}{void * (*start\_routine)(void *)}: uma FUNÇÃO EM C QUE A THREAD EXECUTARÁ
-			\item \textcolor[rgb]{.6,0,1}{void * arg}\footnote{Esse argumento deve ser passado por referência. Atente-se para o cast para void}: arumento recebido por ``\textcolor{orange}{*start\_routine}". Use NULL para valores padrão.
+			\item \textcolor[rgb]{.6,0,1}{void * arg}\footnote{Esse argumento deve ser passado por referência. Atente-se para o cast para void}: argumento recebido por ``\textcolor{orange}{*start\_routine}". Use NULL para valores padrão.
 		\end{itemize}
 	\end{block}
 \end{frame}
@@ -403,8 +403,8 @@ int \textcolor{red}{pthread\_create}(\textcolor{purple}{pthread\_t * thread}, \t
 	\begin{columns}	
 		\column{0.7\textwidth}
 			\begin{block}{Resposta}<2->
-				Programas robustos não depedem de uma ordem específica para executar as threads. \\
-				O SO irá decidir \textbf{quando e onde} executar as treads. \\
+				Programas robustos não dependem de uma ordem específica para executar as threads. \\
+				O SO irá decidir \textbf{quando e onde} executar as threads. \\
 				\textcolor{red}{NÃO PRECISAMOS TRATAR ISSO!}				
 			\end{block}
 
@@ -431,8 +431,8 @@ void \textcolor{red}{pthread\_exit}(\textcolor{purple}{void * retval});
 					\item Uma thread por terminar por vários motivos:
 						\begin{itemize}
 							\item Retornam normalmente da sua função ``\textcolor{orange}{*start\_routine}"
-							\item Fazendo uma chamada para a subrotina \textcolor{red}{pthread\_exit}
-							\item Pode ser cancelada por outra thread via subrotina pthread\_cancel
+							\item Fazendo uma chamada para a sub-rotina \textcolor{red}{pthread\_exit}
+							\item Pode ser cancelada por outra thread via sub-rotina pthread\_cancel
 							\item ...
 						\end{itemize}
 					
@@ -568,7 +568,7 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 		
 
 		\column{0.7\textwidth}
-		\begin{block}{Como uso thread com sockets?}
+		\begin{block}{Como uso thread com Sockets?}
 			\begin{itemize}
 				\item Relembrando, nosso OBJETIVO ERA:
 					\begin{itemize}
@@ -606,7 +606,7 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 %------------------------------------------------
 \begin{frame}\frametitle{O que muda ao usar Threads?}
 	
-	\textcolor{red}{Processo com 1 Thread (sem conexões simultaneas)}\\
+	\textcolor{red}{Processo com 1 Thread (sem conexões simultâneas)}\\
 	\begin{tikzpicture}
 	 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=1\linewidth]{img/server-while.png}};
 		
@@ -618,7 +618,7 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 
 \begin{frame}\frametitle{O que muda ao usar Threads?}
 	
-	\textcolor{red}{Com PThread (permite-se conexões simultaneas)}\\
+	\textcolor{red}{Com PThread (permite-se conexões simultâneas)}\\
 	\begin{tikzpicture}
 	 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=.8\linewidth]{img/server-thread-while.png}};
 		
@@ -635,7 +635,7 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 
 %------------------------------------------------
 \begin{frame}\frametitle{O que muda ao usar Threads?}
-	\textcolor{red}{Com PThread (permite-se conexões simultaneas)}\\
+	\textcolor{red}{Com PThread (permite-se conexões simultâneas)}\\
 	\textcolor{red}{connection-handle}\\
 	\begin{tikzpicture}
 	 	\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=.8\linewidth]{img/handle-connection-server.png}};
@@ -695,7 +695,7 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 			\begin{itemize}
 				\item Usando \textit{Threads}
 				\item Usando \textcolor<2->{red}{\textit{Select}}
-				\item \textcolor{gray}{Usanto libevent}
+				\item \textcolor{gray}{Usando libevent}
 			\end{itemize}
 		\end{itemize}
 		\begin{itemize}
