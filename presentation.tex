@@ -106,7 +106,7 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Sockets - Múltiplas Conexões]{Sockets - Múltiplas Conexões \\ Usando: THREADS e SELECT} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[Sockets -- Conexões Simultâneas]{Sockets - Conexões Simultâneas \\ Usando: THREADS e SELECT} % The short title appears at the bottom of every slide, the full title is only on the title page
 %\subtitle[short version]{A subtitle}
 \author[Bruno P. Santos]{Bruno Pereira}% Your name
 \institute[ UFMG ]% Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -183,12 +183,12 @@ Universidade Federal de Minas Gerais \\ % Your institution for the title page
 		\begin{itemize}
 			\item Ao final dessa aula você será capaz de:
 			\begin{itemize}
-				\item Entender o uso de threads
+				\item Entender o uso de \textit{Threads}
 				\item Entender o uso do \textit{Select}
 			\end{itemize}
 			\item Criar um programa \textbf{SERVIDOR} que aceita conexão de vários clientes
 			\begin{itemize}
-				\item Usando \textcolor<2->{red}{\textit{Threads}}
+				\item \textcolor<2->{red}{Usando \textit{Threads}}
 				\item Usando \textit{Select}
 				\item \textcolor{gray}{Usanto libevent}
 			\end{itemize}
@@ -278,13 +278,13 @@ Universidade Federal de Minas Gerais \\ % Your institution for the title page
 		\column{0.5\textwidth}
 		\begin{figure}
 		\centering
-			\includegraphics[width=1\linewidth]{img/process}<1->
+			\includegraphics[width=.8\linewidth]{img/process}<1->
 		\end{figure}
 
 		\column{0.5\textwidth}
 		\begin{figure}
 		\centering
-			\includegraphics[width=1.\linewidth]{img/thread.png}<2->
+			\includegraphics[width=.8\linewidth]{img/thread.png}<2->
 		\end{figure}
 	\end{columns}
 
@@ -395,7 +395,7 @@ int \textcolor{red}{pthread\_create}(\textcolor{purple}{pthread\_t * thread}, \t
 			\item Q: Dado que a thread foi criada como você saberá:
 				\begin{itemize}
 					\item Quando a thread será escalonada para executar pelo SO?
-					\item Qual processaor/núcleo ela irá executar?	
+					\item Qual processador/núcleo ela irá executar?	
 				\end{itemize}
 		\end{itemize}
 	\end{alertblock}
@@ -563,7 +563,7 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 		\column{0.3\textwidth}
 			\begin{figure}
 				\includegraphics[width=.8\linewidth]{img/taserto.png}
-				\caption{Vlw Brunão ta Serto, maIs i daew? \\R: RLX!}
+				\caption{Vlw Brunão ta Serto, maIs i daew? ~~R: RLX!}
 			\end{figure}
 		
 
@@ -573,7 +573,7 @@ void \textcolor{red}{pthread\_join}(\textcolor{purple}{pthread\_t * thread}, \te
 				\item Relembrando, nosso OBJETIVO ERA:
 					\begin{itemize}
 						\item Saber \textcolor{red}{THREADS} (\checkmark)
-						\item Conexões simultaneas com Threads (~)
+						\item Conexões simultâneas com Threads (~)
 					\end{itemize}
 			\end{itemize}
 		\end{block}
@@ -885,7 +885,7 @@ int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_s
 		\column{0.3\textwidth}
 			\begin{figure}
 				\includegraphics[width=.8\linewidth]{img/taserto.png}
-				\caption{Vlw Brunão ta Serto, maIs i daew? \\ R: RLX!}
+				\caption{Vlw Brunão ta Serto, maIs i daew? ~~R: RLX!}
 			\end{figure}
 		
 
@@ -895,7 +895,7 @@ int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_s
 				\item Relembrando, nosso OBJETIVO ERA:
 					\begin{itemize}
 						\item Saber usar \textcolor{red}{SELECT} (\checkmark)
-						\item Conexões simultaneas SELECT (~)
+						\item Conexões simultâneas SELECT (~)
 					\end{itemize}
 			\end{itemize}
 		\end{block}
@@ -913,7 +913,7 @@ int \textcolor{red}{select}(\textcolor{purple}{int nfds}, \textcolor{blue}{fd\_s
 
 
 %------------------------------------------------
-\section{Extra} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+\section{Info. Extra} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
 %------------------------------------------------
 
 \begin{frame}\frametitle{Extras}
