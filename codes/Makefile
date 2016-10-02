@@ -2,7 +2,7 @@
 #Compilator
 CC=gcc
 
-#Flasgs
+#Flags
 CFLAGS=-Wall -pthread
 
 all: client.o server-select.o server-thread.o server.o
